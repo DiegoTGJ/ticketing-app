@@ -1,9 +1,17 @@
 import express from "express";
-
+import { MethodNotAllowedError } from "../errors/method-not-allower-error";
 const router = express.Router();
 
-router.get('/api/users/signout', (req, res) => {
-  res.send("Hi from signout")
-})
+const route = "/api/users/signout";
+router.post(route, (req, res) => {
+  req.session = null;
+  res.send({});
+});
+router.all(route, (req, res) => {
+  if (req.method !== "OPTIONS") {
+    throw new MethodNotAllowedError(req.method, "POST");
+  }
+  res.send({});
+});
 
-export {router as signoutRouter}
+export { router as signoutRouter };
