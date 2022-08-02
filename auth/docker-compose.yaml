@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  test_auth:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./src:/app/src
