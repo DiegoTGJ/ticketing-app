@@ -1,4 +1,3 @@
-import { response } from "express";
 import request from "supertest";
 import { app } from "../../app";
 
@@ -31,4 +30,25 @@ it("return a 400 with an invalid password", async () => {
       password: "12",
     })
     .expect(400);
+});
+
+it("sets a cookie after succesful signup", async () => {
+  const res = await request(app)
+    .post(route)
+    .send({
+      email: "test@test.com",
+      password: "1233",
+    })
+    .expect(201);
+  expect(res.get("Set-Cookie")).toBeDefined();
+});
+
+it("returns method not allowed with method other than POST", async () => {
+  const res = await request(app)
+    .put(route)
+    .send({
+      email: "test@test.com",
+      password: "1233",
+    })
+    .expect(405);
 });
