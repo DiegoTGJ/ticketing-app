@@ -1,6 +1,5 @@
 import express from "express";
-import { MethodNotAllowedError } from "../errors/method-not-allower-error";
-import { currentUser } from "../middlewares/current-user";
+import { MethodNotAllowedError, currentUser } from "@pdtg-ticketing/common";
 const router = express.Router();
 
 const route = "/api/users/currentuser";

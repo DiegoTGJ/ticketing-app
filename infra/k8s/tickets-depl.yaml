@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  selector:
+    matchLabels:
+      app: tickets
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - image:  pdtg/ticketing-tickets
+          name:  tickets
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://tickets-mongo-srv:27017/tickets'
+            - name:  JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name:  jwt-secret
+                  key:  JWT_KEY
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 500m
+              memory: 1400Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  selector:
+    app: tickets
+  ports:
+  - name: tickets
+    port:  3000
+    targetPort: 3000
+    protocol: TCP

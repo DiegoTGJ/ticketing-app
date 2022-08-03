@@ -1,5 +1,5 @@
 import express from "express";
-import { MethodNotAllowedError } from "../errors/method-not-allower-error";
+import { MethodNotAllowedError } from "@pdtg-ticketing/common";
 const router = express.Router();
 
 const route = "/api/users/signout";

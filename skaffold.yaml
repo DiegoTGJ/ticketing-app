@@ -24,3 +24,11 @@ build:
         manual:
           - dest: .
             src: "**/*.js"
+    - image: pdtg/ticketing-tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"

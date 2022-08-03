@@ -3,11 +3,12 @@ import "express-async-errors";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
 
-import { currentuserRouter } from "./routes/current-user";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
-import { errorHandler, NotFoundError } from "@pdtg-ticketing/common";
+import {
+  errorHandler,
+  NotFoundError,
+  currentUser,
+} from "@pdtg-ticketing/common";
+import { createTicketRouter } from "./routes/new";
 
 const app = express();
 
@@ -19,8 +20,9 @@ app.use(
     secure: process.env.NODE_ENV !== "test",
   })
 );
-app.use(currentuserRouter, signinRouter, signoutRouter, signupRouter);
+app.use(currentUser);
 
+app.use(createTicketRouter);
 app.all("*", async () => {
   throw new NotFoundError();
 });

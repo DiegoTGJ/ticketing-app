@@ -2,13 +2,16 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { validateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
+import {
+  validateRequest,
+  BadRequestError,
+  MethodNotAllowedError,
+} from "@pdtg-ticketing/common";
 import { User } from "../models/user";
-import { MethodNotAllowedError } from "../errors/method-not-allower-error";
 
 const router = express.Router();
 const route = "/api/users/signup";
+
 router.post(
   route,
   [
