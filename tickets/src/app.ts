@@ -9,6 +9,7 @@ import {
   currentUser,
 } from "@pdtg-ticketing/common";
 import { createTicketRouter } from "./routes/new";
+import { showTicketRouter } from "./routes/show";
 
 const app = express();
 
@@ -21,8 +22,8 @@ app.use(
   })
 );
 app.use(currentUser);
-
-app.use(createTicketRouter);
+//Routes
+app.use(createTicketRouter, showTicketRouter);
 app.all("*", async () => {
   throw new NotFoundError();
 });
