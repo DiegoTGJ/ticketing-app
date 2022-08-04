@@ -5,7 +5,7 @@ import request from "supertest";
 import { app } from "../app";
 
 declare global {
-  var signin: () => string[];
+  var signin: (userId?: string) => string[];
 }
 
 let mongo: any;
@@ -32,12 +32,14 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = () => {
+global.signin = (userId?: string) => {
   // Build a JWT payload. {id, email}
-  const payload = {
-    id: "1234",
+  let payload;
+  payload = {
+    id: userId || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
   };
+
   // Create the JWT!
   const token = jwt.sign(payload, process.env.JWT_KEY!);
   // Build session Object. { jwt: MY_JWT }
